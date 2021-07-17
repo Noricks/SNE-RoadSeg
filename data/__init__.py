@@ -58,8 +58,8 @@ class CustomDatasetDataLoader(BaseDataLoader):
             self.dataset,
             batch_size=opt.batch_size,
             shuffle=not opt.serial_batches,
-            num_workers=int(opt.num_threads),
-            worker_init_fn=lambda worker_id: numpy.random.seed(opt.seed + worker_id))
+            num_workers=int(0))
+            #worker_init_fn=lambda worker_id: numpy.random.seed(opt.seed + worker_id))
 
     def load_data(self):
         return self

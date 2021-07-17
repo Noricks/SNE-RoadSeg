@@ -6,6 +6,7 @@ from util.util import confusion_matrix, getScores, save_images
 import torch
 import numpy as np
 import cv2
+import time
 
 if __name__ == '__main__':
     opt = TestOptions().parse()
@@ -29,6 +30,7 @@ if __name__ == '__main__':
     conf_mat = np.zeros((dataset.dataset.num_labels, dataset.dataset.num_labels), dtype=np.float)
     with torch.no_grad():
         for i, data in enumerate(dataset):
+            time_start = time.time()
             model.set_input(data)
             model.forward()
             model.get_loss()
@@ -36,6 +38,8 @@ if __name__ == '__main__':
             gt = model.label.cpu().int().numpy()
             _, pred = torch.max(model.output.data.cpu(), 1)
             pred = pred.float().detach().int().numpy()
+            time_end = time.time()
+            print('totally cost', time_end - time_start)
             save_images(save_dir, model.get_current_visuals(), model.get_image_names(), model.get_image_oriSize(), opt.prob_map)
 
             # Resize images to the original size for evaluation

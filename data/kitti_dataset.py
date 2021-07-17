@@ -86,9 +86,12 @@ class kittidataset(BaseDataset):
             self.image_list = sorted(glob.glob(os.path.join(self.root, 'testing', 'image_2', '*.png')))
 
     def __getitem__(self, index):
-        useDir = "/".join(self.image_list[index].split('/')[:-2])
-        name = self.image_list[index].split('/')[-1]
-
+        for x in self.image_list:
+            print ("/".join(x.split('\\')[0:2]))
+        useDir = "/".join(self.image_list[index].split('\\')[0:2])
+        name = self.image_list[index].split('\\')[-1]
+        print(useDir)
+        print(name)
         rgb_image = cv2.cvtColor(cv2.imread(os.path.join(useDir, 'image_2', name)), cv2.COLOR_BGR2RGB)
         depth_image = cv2.imread(os.path.join(useDir, 'depth_u16', name), cv2.IMREAD_ANYDEPTH)
         oriHeight, oriWidth, _ = rgb_image.shape

@@ -94,7 +94,7 @@ if __name__ == '__main__':
         model.eval()
         valid_loss_iter = []
         epoch_iter = 0
-        conf_mat = np.zeros((valid_dataset.dataset.num_labels, valid_dataset.dataset.num_labels), dtype=np.float)
+        conf_mat = np.zeros((valid_dataset.dataset.num_labels, valid_dataset.dataset.num_labels), dtype=float)
         with torch.no_grad():
             for i, data in enumerate(valid_dataset):
                 model.set_input(data)
